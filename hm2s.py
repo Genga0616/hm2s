@@ -6,14 +6,21 @@ import sys
 import re
 
 
-def parse_hm(text):
-    match = re.fullmatch(r"(\d+)h(\d+)m", text.strip())
-    if not match:
-        raise ValueError(f"Invalid format: '{text.strip()}' (expected: <hours>h<minutes>m)")
+def parse_input(text):
+    text = text.strip()
 
-    hours = int(match.group(1))
-    minutes = int(match.group(2))
-    return hours * 3600 + minutes * 60
+    match_hm = re.fullmatch(r"(\d+)h(\d+)m", text)
+    if match_hm:
+        hours = int(match_hm.group(1))
+        minutes = int(match_hm.group(2))
+        return [hours * 3600 + minutes * 60]
+
+    match_h = re.fullmatch(r"(\d+)h", text)
+    if match_h:
+        hours = int(match_h.group(1))
+        return [hours * 60, hours * 3600]
+
+    raise ValueError("無効な入力です")
 
 
 def main():
@@ -24,14 +31,15 @@ def main():
             continue
         has_input = True
         try:
-            seconds = parse_hm(stripped)
-            print(seconds)
+            results = parse_input(stripped)
+            for val in results:
+                print(val)
         except ValueError as e:
-            sys.stderr.write(f"Error: {e}\n")
+            sys.stderr.write(f"エラー: {e}\n")
             sys.exit(1)
 
     if not has_input:
-        sys.stderr.write("Error: no input provided\n")
+        sys.stderr.write("エラー: 入力がありません\n")
         sys.exit(1)
 
 
