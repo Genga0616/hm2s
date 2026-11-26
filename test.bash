@@ -23,6 +23,15 @@ out=$(echo "2h" | ./hm2s.py)
 [ "$?" = 0 ] || ng "$LINENO"
 [ "$out" = $'120\n7200' ] || ng "$LINENO"
 
+# mだけのとき
+out=$(echo "30m" | ./hm2s.py)
+[ "$?" = 0 ] || ng "$LINENO"
+[ "$out" = 1800 ] || ng "$LINENO"
+
+out=$(echo "90m" | ./hm2s.py)
+[ "$?" = 0 ] || ng "$LINENO"
+[ "$out" = $'1.5\n5400' ] || ng "$LINENO"
+
 # 複数行
 out=$(printf "1h0m\n0h1m\n" | ./hm2s.py)
 [ "$?" = 0 ] || ng "$LINENO"
@@ -33,7 +42,7 @@ out=$(echo "あいう" | ./hm2s.py 2>/dev/null)
 [ "$?" = 1 ] || ng "$LINENO"
 [ "$out" = "" ] || ng "$LINENO"
 
-out=$(echo "90m" | ./hm2s.py 2>/dev/null)
+out=$(echo "90s" | ./hm2s.py 2>/dev/null)
 [ "$?" = 1 ] || ng "$LINENO"
 [ "$out" = "" ] || ng "$LINENO"
 

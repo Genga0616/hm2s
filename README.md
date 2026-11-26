@@ -3,7 +3,7 @@ Markdown
 
 ![test](https://github.com/Genga0616/hm2s/actions/workflows/test.yml/badge.svg)
 
-標準入力から `<hours>h<minutes>m` または `<hours>h` 形式の時間文字列を読み込み、秒数（`<hours>h` の場合は分と秒）に変換して標準出力に出力するコマンドです。
+標準入力から `<hours>h<minutes>m`、`<hours>h`、`<minutes>m` 形式の時間文字列を読み込み、秒数などに変換して標準出力に出力するコマンドです。
 
 ## インストール方法
 
@@ -20,11 +20,19 @@ Bash
 $ echo "2h" | ./hm2s.py
 120
 7200
+<minutes>m を入力した場合（秒数を出力、60を超えると時間と秒を改行して出力）
+Bash
+$ echo "30m" | ./hm2s.py
+1800
+
+$ echo "90m" | ./hm2s.py
+1.5
+5400
 複数行をまとめて変換する場合
 Bash
-$ printf "1h0m\n0h15m\n" | ./hm2s.py
+$ printf "1h0m\n0h1m\n" | ./hm2s.py
 3600
-900
+60
 必要なソフトウェア
 Python
 

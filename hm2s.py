@@ -20,6 +20,13 @@ def parse_input(text):
         hours = int(match_h.group(1))
         return [hours * 60, hours * 3600]
 
+    match_m = re.fullmatch(r"(\d+)m", text)
+    if match_m:
+        minutes = int(match_m.group(1))
+        if minutes > 60:
+            return [minutes / 60, minutes * 60]
+        return [minutes * 60]
+
     raise ValueError("無効な入力です")
 
 
